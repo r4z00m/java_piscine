@@ -21,6 +21,7 @@ public class Program {
 
     public static void main(String[] args) {
         Map<String, String> signatures = readSignatures();
+
         if (signatures.size() == 0) {
             return;
         }
@@ -38,12 +39,14 @@ public class Program {
 
                     try (FileInputStream fis = new FileInputStream(fileName)) {
                         byte[] bytes = new byte[SING_SIZE];
+
                         Integer res = fis.read(bytes, 0, SING_SIZE);
 
                         if (res < SING_SIZE) {
                             System.err.println(ERROR);
                             return;
                         }
+
                         putSignatureToFile(signatures, bytesToHex(bytes), fileOutputStream);
                     }
                 }
@@ -59,21 +62,26 @@ public class Program {
         for (Map.Entry<String, String> entry : signatures.entrySet()) {
             if (signature.contains(entry.getValue())) {
                 fileOutputStream.write(entry.getKey().getBytes());
+
                 fileOutputStream.write('\n');
+
                 System.out.println(PROCESSED);
                 return;
             }
         }
+
         System.out.println(UNDEFINED);
     }
 
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
+
         for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;
             hexChars[j * 2] = HEX_CHAR_ARRAY[v >>> 4];
             hexChars[j * 2 + 1] = HEX_CHAR_ARRAY[v & 0x0F];
         }
+
         return new String(hexChars);
     }
 
@@ -88,6 +96,7 @@ public class Program {
         } catch (FileNotFoundException e) {
             System.err.println(FILE_NOT_FOUND);
         }
+
         return signatures;
     }
 }

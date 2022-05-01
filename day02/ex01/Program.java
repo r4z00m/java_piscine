@@ -68,6 +68,7 @@ public class Program {
 
         Integer numerator = countNumerator(vector1, vector2);
         Double denominator = countDenominator(vector1, vector2);
+
         System.out.println(SIMILARITY + new BigDecimal(numerator / denominator).setScale(2, RoundingMode.FLOOR));
     }
 
@@ -82,6 +83,7 @@ public class Program {
 
         sum1 = Math.sqrt(sum1);
         sum2 = Math.sqrt(sum2);
+
         return sum1 * sum2;
     }
 
@@ -93,6 +95,7 @@ public class Program {
             Integer integer2 = vector2[i];
             numerator += integer1 * integer2;
         }
+
         return numerator;
     }
 

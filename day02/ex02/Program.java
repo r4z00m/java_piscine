@@ -79,37 +79,31 @@ public class Program {
             return;
         }
 
+        Path path1 = Paths.get(current + File.separator + strings[1]);
+        Path path2;
+
         if (strings[2].startsWith("..")) {
             String pathTo = strings[2].replaceFirst("\\.\\.", "");
 
-            Path path1 = Paths.get(current + File.separator + strings[1]);
-
-            Path path2;
             if (pathTo.isEmpty()) {
                 path2 = Paths.get(current.getParent() + File.separator + strings[1]);
             } else {
                 path2 = Paths.get(current.getParent() + File.separator + pathTo + File.separator + strings[1]);
             }
-
-            try {
-                Files.move(path1, path1.resolveSibling(path2));
-            } catch (IOException e) {
-                System.err.println(ERROR_MOVE);
-            }
         } else {
-            try {
-                Path path1 = Paths.get(current + File.separator + strings[1]);
-                File file = new File(strings[2]);
-                Path path2;
-                if (file.isDirectory()) {
-                    path2 = Paths.get(strings[2] + File.separator + strings[1]);
-                } else {
-                    path2 = Paths.get(current + File.separator + strings[2]);
-                }
-                Files.move(path1, path1.resolveSibling(path2));
-            } catch (IOException e) {
-                System.err.println(ERROR_MOVE);
+            File file = new File(strings[2]);
+
+            if (file.isDirectory()) {
+                path2 = Paths.get(strings[2] + File.separator + strings[1]);
+            } else {
+                path2 = Paths.get(current + File.separator + strings[2]);
             }
+        }
+
+        try {
+            Files.move(path1, path1.resolveSibling(path2));
+        } catch (IOException e) {
+            System.err.println(ERROR_MOVE);
         }
     }
 
@@ -134,32 +128,26 @@ public class Program {
                 if (current.getParent() != null) {
                     File file = new File(current.getParent() + path);
 
-                    if (file.isDirectory()) {
-                        return file;
-                    } else {
-                        System.err.println(ERROR_PATH);
-                        return current;
-                    }
+                    return returnFile(file, current);
                 } else {
                     File file = new File(path);
 
-                    if (file.isDirectory()) {
-                        return file;
-                    } else {
-                        System.err.println(ERROR_PATH);
-                        return current;
-                    }
+                    return returnFile(file, current);
                 }
             }
         } else {
             File file = new File(current + File.separator + strings[1]);
 
-            if (file.isDirectory()) {
-                return file;
-            } else {
-                System.err.println(ERROR_PATH);
-                return current;
-            }
+            return returnFile(file, current);
+        }
+    }
+
+    private static File returnFile(File file, File current) {
+        if (file.isDirectory()) {
+            return file;
+        } else {
+            System.err.println(ERROR_PATH);
+            return current;
         }
     }
 
@@ -192,6 +180,7 @@ public class Program {
                     length += folderSize(file);
             }
         }
+
         return length;
     }
 }
