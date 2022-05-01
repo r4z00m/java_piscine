@@ -3,6 +3,8 @@ import java.util.UUID;
 
 public class TransactionsService {
 
+    public static final String ILLEGAL_TRANSACTION = "Illegal transaction!";
+
     private final UsersList usersList = new UsersArrayList();
 
     public void addUser(User user) {
@@ -18,7 +20,7 @@ public class TransactionsService {
         User sender = usersList.getUserById(senderId);
 
         if (amount < 0 || sender.getBalance() < amount || recipientId == senderId) {
-            throw new IllegalTransactionException("Illegal transaction!");
+            throw new IllegalTransactionException(ILLEGAL_TRANSACTION);
         }
 
         Transaction t1 = new Transaction(recipient, sender, Transaction.Category.DEBIT, amount);

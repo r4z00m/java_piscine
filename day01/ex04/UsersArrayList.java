@@ -1,6 +1,8 @@
 
 public class UsersArrayList implements UsersList {
 
+    public static final String USER_NOT_FOUND = "User not found!";
+
     private Integer size = 10;
     private Integer index = 0;
     private User[] users = new User[size];
@@ -27,7 +29,7 @@ public class UsersArrayList implements UsersList {
                 }
             }
         }
-        throw new UserNotFoundException("User not found!");
+        throw new UserNotFoundException(USER_NOT_FOUND);
     }
 
     @Override

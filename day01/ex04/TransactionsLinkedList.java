@@ -3,6 +3,8 @@ import java.util.UUID;
 
 public class TransactionsLinkedList implements TransactionsList {
 
+    public static final String TRANSACTION_NOT_FOUND = "Transaction not found!";
+
     private Transaction head;
     private Transaction last;
     private Integer size = 0;
@@ -41,7 +43,7 @@ public class TransactionsLinkedList implements TransactionsList {
                 prev = prev.getNext();
             }
         }
-        throw new TransactionNotFoundException("Transaction not found!");
+        throw new TransactionNotFoundException(TRANSACTION_NOT_FOUND);
     }
 
     @Override
