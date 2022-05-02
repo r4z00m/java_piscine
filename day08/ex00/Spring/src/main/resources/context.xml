@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="preProcessorU" class="preprosessor.PreProcessorToUpperImpl"/>
+
+    <bean id="preProcessorL" class="preprosessor.PreProcessorToLower"/>
+
+
+
+    <bean id="rendererStandard1" class="renderer.RendererStandardImpl">
+        <constructor-arg name="preProcessor" ref="preProcessorU"/>
+    </bean>
+
+    <bean id="rendererStandard2" class="renderer.RendererStandardImpl">
+        <constructor-arg name="preProcessor" ref="preProcessorL"/>
+    </bean>
+
+    <bean id="rendererErr1" class="renderer.RendererErrImpl">
+        <constructor-arg name="preProcessor" ref="preProcessorU"/>
+    </bean>
+
+    <bean id="rendererErr2" class="renderer.RendererErrImpl">
+        <constructor-arg name="preProcessor" ref="preProcessorL"/>
+    </bean>
+
+
+
+    <bean id="printerWithPrefix1" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="rendererErr1"/>
+    </bean>
+
+    <bean id="printerWithPrefix2" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="rendererErr2"/>
+    </bean>
+
+    <bean id="printerWithPrefix3" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="rendererStandard1"/>
+    </bean>
+
+    <bean id="printerWithPrefix4" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="rendererStandard2"/>
+    </bean>
+
+
+
+    <bean id="printerWithDate1" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="renderer" ref="rendererErr1"/>
+    </bean>
+
+    <bean id="printerWithDate2" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="renderer" ref="rendererErr2"/>
+    </bean>
+
+    <bean id="printerWithDate3" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="renderer" ref="rendererStandard1"/>
+    </bean>
+
+    <bean id="printerWithDate4" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="renderer" ref="rendererStandard2"/>
+    </bean>
+
+</beans>
