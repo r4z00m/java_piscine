@@ -58,8 +58,12 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
             String message = set.getString(TEXT);
             Timestamp timestamp = set.getTimestamp(TIME);
 
-            ResultSet authorSet = connection.createStatement().executeQuery(SELECT_FROM_USERS + authorId);
-            ResultSet roomSet = connection.createStatement().executeQuery(SELECT_FROM_ROOMS + roomId);
+            ResultSet authorSet = connection
+                    .createStatement()
+                    .executeQuery(SELECT_FROM_USERS + authorId);
+            ResultSet roomSet = connection
+                    .createStatement()
+                    .executeQuery(SELECT_FROM_ROOMS + roomId);
 
             authorSet.next();
             roomSet.next();
@@ -89,7 +93,8 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
     @Override
     public void save(Message message) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_MESSAGES);
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement(INSERT_INTO_MESSAGES);
             preparedStatement.setLong(1, message.getAuthor().getId());
             preparedStatement.setLong(2, message.getRoom().getId());
             preparedStatement.setString(3, message.getText());
@@ -100,7 +105,9 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
         }
 
         try {
-            ResultSet set = connection.createStatement().executeQuery(SELECT_FROM_MESSAGES);
+            ResultSet set = connection
+                    .createStatement()
+                    .executeQuery(SELECT_FROM_MESSAGES);
             while (set.next()) {
                 if (set.isLast()) {
                     break;
