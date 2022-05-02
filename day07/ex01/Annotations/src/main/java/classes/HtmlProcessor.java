@@ -16,23 +16,30 @@ import java.util.Set;
 @SupportedSourceVersion(value = SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class HtmlProcessor extends AbstractProcessor {
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         StringBuilder stringBuilder = new StringBuilder();
+
         for (Element userForm : roundEnv.getElementsAnnotatedWith(HtmlForm.class)) {
             HtmlForm htmlFormAnn = userForm.getAnnotation(HtmlForm.class);
+
             stringBuilder
                     .append("<form action = \"")
                     .append(htmlFormAnn.action())
                     .append("\" method = \"")
                     .append(htmlFormAnn.method())
                     .append("\">\n");
+
             List<? extends Element> userFormElements = userForm.getEnclosedElements();
+
             for (Element field : roundEnv.getElementsAnnotatedWith(HtmlInput.class)) {
                 if (!userFormElements.contains(field)) {
                     continue;
                 }
+
                 HtmlInput htmlInputAnn = field.getAnnotation(HtmlInput.class);
+
                 stringBuilder
                         .append("\t<input type = ")
                         .append(htmlInputAnn.type())
@@ -42,7 +49,9 @@ public class HtmlProcessor extends AbstractProcessor {
                         .append(htmlInputAnn.placeholder())
                         .append("\">\n");
             }
+
             stringBuilder.append("\t<input type = \"submit\" value = \"Send\">\n</form>");
+
             try (BufferedWriter writer = new BufferedWriter(
                     new FileWriter("target/classes/" + htmlFormAnn.fileName()))) {
                 writer.write(stringBuilder.toString());

@@ -21,6 +21,7 @@ public class Program {
         }
 
         final Integer count;
+
         try {
             count = Integer.parseInt(args[0].replaceFirst(KEY, ""));
         } catch (NumberFormatException e) {

@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.SOURCE)
 @Target(value = ElementType.FIELD)
 public @interface HtmlInput {
+
     String type();
     String name();
     String placeholder();
