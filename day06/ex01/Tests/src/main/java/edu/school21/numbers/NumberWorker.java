@@ -2,13 +2,17 @@ package edu.school21.numbers;
 
 public class NumberWorker {
 
+    public static final String ERROR_ILLEGAL_NUMBER = "Error: Illegal number!";
+
     public boolean isPrime(int number) {
         if (number <= 1) {
-            throw new IllegalNumberException("Error: Illegal number!");
+            throw new IllegalNumberException(ERROR_ILLEGAL_NUMBER);
         }
+
         if (number == 2) {
             return true;
         }
+
         if (number % 2 == 0) {
             return false;
         } else {
@@ -25,7 +29,9 @@ public class NumberWorker {
         if (number < 0) {
             number = -number;
         }
+
         int sum = 0;
+
         while (number != 0) {
             sum += number % 10;
             number /= 10;

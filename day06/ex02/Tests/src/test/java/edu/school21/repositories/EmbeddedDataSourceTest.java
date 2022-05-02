@@ -11,13 +11,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class EmbeddedDataSourceTest {
 
+    public static final String SCHEMA_SQL = "schema.sql";
+    public static final String DATA_SQL = "data.sql";
+
     private DataSource dataSource;
 
     @BeforeEach
     public void init() {
         dataSource = new EmbeddedDatabaseBuilder()
-                .addScript("schema.sql")
-                .addScript("data.sql")
+                .addScript(SCHEMA_SQL)
+                .addScript(DATA_SQL)
                 .build();
     }
 
